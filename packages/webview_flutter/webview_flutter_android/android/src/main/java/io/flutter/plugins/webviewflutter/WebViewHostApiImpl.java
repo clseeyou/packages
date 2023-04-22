@@ -11,6 +11,7 @@ import android.os.Build;
 import android.view.View;
 import android.view.ViewParent;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
@@ -204,6 +205,9 @@ public class WebViewHostApiImpl implements WebViewHostApi {
     displayListenerProxy.onPreWebViewInitialization(displayManager);
 
     final WebView webView = webViewProxy.createWebView(context, binaryMessenger, instanceManager);
+
+    // fix: http image can't show
+    webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
 
     displayListenerProxy.onPostWebViewInitialization(displayManager);
     instanceManager.addDartCreatedInstance(webView, instanceId);
